@@ -130,6 +130,36 @@ class DatePicker {
                 MaterialLocalizations.of(context).modalBarrierDismissLabel,
             pickerModel: pickerModel));
   }
+
+
+  static Future<DateTime> showMonthPicker(
+      BuildContext context, {
+        bool showTitleActions: true,
+        DateTime minTime,
+        DateTime maxTime,
+        DateChangedCallback onChanged,
+        DateChangedCallback onConfirm,
+        locale: LocaleType.en,
+        DateTime currentTime,
+        DatePickerTheme theme,
+      }) async {
+    return await Navigator.push(
+        context,
+        new _DatePickerRoute(
+            showTitleActions: showTitleActions,
+            onChanged: onChanged,
+            onConfirm: onConfirm,
+            locale: locale,
+            theme: theme,
+            barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+            pickerModel: MonthPickerModel(
+                currentTime: currentTime,
+                maxTime: maxTime,
+                minTime: minTime,
+                locale: locale)));
+  }
+
 }
 
 class _DatePickerRoute<T> extends PopupRoute<T> {
@@ -492,5 +522,26 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
   @override
   bool shouldRelayout(_BottomPickerLayout oldDelegate) {
     return progress != oldDelegate.progress;
+  }
+}
+
+
+class MonthPickerModel extends DatePickerModel {
+  MonthPickerModel({
+    DateTime currentTime,
+    DateTime maxTime,
+    DateTime minTime,
+    LocaleType locale,
+  }) : super(
+    locale: locale,
+    currentTime: currentTime,
+    maxTime: maxTime,
+    minTime: minTime,
+  );
+
+
+  @override
+  List<int> layoutProportions() {
+    return [4, 1, 0];
   }
 }
