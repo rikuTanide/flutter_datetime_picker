@@ -542,6 +542,6 @@ class MonthPickerModel extends DatePickerModel {
 
   @override
   List<int> layoutProportions() {
-    return [4, 1, 0];
+    return [3, 2, 0];
   }
 }
